@@ -3,18 +3,17 @@ layout: page
 title: 備忘録の書き方
 ---
 
-<a href="/" style="
+<a href="index.html" style="
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #4A4A4A; /* 落ち着いたダークグレー */
+  background-color: #4A4A4A; /* 落ち着いたグレー */
   color: #ffffff;
   padding: 10px;
   border-radius: 10px;
   text-decoration: none;
   font-weight: bold;
 ">🏠 ホームに戻る</a>
-
 
 <h1>📝 備忘録の書き方</h1>
 <p>このページでは、備忘録サイトの構成や編集方法をまとめています。</p>
@@ -85,5 +84,26 @@ title: 備忘録の書き方
 <pre><code>git commit --allow-empty -m "Trigger GitHub Pages redeploy"
 git push origin main
 </code></pre>
-✅ **これでGitHub Pagesが強制的に再構築され、最新の内容が反映されるはず！**
 
+<h2>🔧 Jekyllをリビルドする方法</h2>
+<p>Jekyllの変更がローカル環境やGitHub Pagesに反映されない場合、リビルドを行います。</p>
+
+<h3>🗑️ キャッシュの削除</h3>
+<ul>
+  <li>Jekyllのビルドキャッシュが原因で変更が適用されない場合があります。</li>
+  <li>以下のコマンドを実行してキャッシュを削除してください：</li>
+</ul>
+<pre><code>bundle exec jekyll clean</code></pre>
+
+<h3>⚙️ Jekyllを再起動</h3>
+<ul>
+  <li>キャッシュを削除した後、Jekyllを再起動して変更を反映させます。</li>
+  <li>以下のコマンドを実行してください：</li>
+</ul>
+<pre><code>bundle exec jekyll serve</code></pre>
+
+<style>
+    h2 {
+      margin-top: 35px; /* 見出しの上部に余白を追加 */
+    }
+  </style>
