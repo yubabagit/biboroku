@@ -1,1 +1,57 @@
-<p>備忘録について記載予定</p>
+---
+layout: page
+title: 備忘録の書き方
+---
+
+<h1>📝 備忘録の書き方</h1>
+<p>このページでは、備忘録サイトの構成や編集方法をまとめています。</p>
+
+<h2>📌 使用しているツール</h2>
+<ul>
+  <li>💎 <strong>Ruby</strong> - Jekyllの動作に必要</li>
+  <li>📄 <strong>Jekyll</strong> - 静的サイトジェネレータ</li>
+  <li>🛠 <strong>Git</strong> - バージョン管理ツール</li>
+  <li>🌍 <strong>GitHub Pages</strong> - サイト公開サービス</li>
+</ul>
+
+<h2>🖥 ホーム画面を編集したい場合</h2>
+<p>以下のファイルを編集してください：</p>
+<ul>
+  <li>📌 index.html</li>
+  <li>📌 _layouts/home.html</li>
+</ul>
+
+<h2>🔗 リンク先を編集したい場合</h2>
+<p>各ページのファイルを編集できます：</p>
+<ul>
+    <li><a href="git-guide.html">🛠 Gitについて</a>：git-guide.html</li>
+    <li><a href="angular-guide.html">⚡ Angularについて</a>：angular-guide.html</li>
+    <li><a href="memo-guide.html">📝 備忘録の書き方</a>：memo-guide.html</li>
+</ul>
+
+<h2>🚀 ローカルで備忘録を確認したい場合</h2>
+<ol>
+  <li>💻 ローカルサーバーを起動：
+    <pre><code>bundle exec jekyll serve</code></pre>
+  </li>
+  <li>🌐 ローカルでサイトを表示：
+    <pre><code>http://127.0.0.1:4000/</code></pre>
+  </li>
+</ol>
+
+<h2>🛠 ローカルからGitHubに反映させる手順</h2>
+<p>変更したファイルをGitHubリポジトリにアップロードする流れを説明します。</p>
+<ol>
+  <li>🔍 変更されたファイルを確認：
+    <pre><code>git status</code></pre>
+  </li>
+  <li>📌 変更をステージング：
+    <pre><code>git add .</code></pre>
+  </li>
+  <li>💾 変更をコミット：
+    <pre><code>git commit -m "コミットコメント"</code></pre>
+  </li>
+  <li>🌍 GitHubにPush：
+    <pre><code>git push origin main</code></pre>
+  </li>
+</ol>
