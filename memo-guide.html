@@ -3,6 +3,19 @@ layout: page
 title: 備忘録の書き方
 ---
 
+<a href="/" style="
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #4A4A4A; /* 落ち着いたダークグレー */
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+">🏠 ホームに戻る</a>
+
+
 <h1>📝 備忘録の書き方</h1>
 <p>このページでは、備忘録サイトの構成や編集方法をまとめています。</p>
 
@@ -55,3 +68,22 @@ title: 備忘録の書き方
     <pre><code>git push origin main</code></pre>
   </li>
 </ol>
+
+<h2>🔄 GitHub Pagesに反映されない場合の対処法</h2>
+<p>ローカルでは変更が反映されるのに、GitHub Pages上では更新されない場合の解決策。</p>
+
+<h3>🧹 キャッシュの削除</h3>
+<p>ブラウザキャッシュが原因で古いページが表示される場合があります。以下を試してください：</p>
+<ul>
+  <li>🔄 <strong>Ctrl + Shift + R</strong> で強制リロード</li>
+  <li>🕵️ シークレットモードでアクセス</li>
+  <li>📱 別のデバイス（スマホなど）で確認</li>
+</ul>
+
+<h3>🚀 GitHub Pagesのデプロイを強制リロード</h3>
+<p>GitHubのデプロイ処理が遅延している場合は、以下のコマンドで強制的に再デプロイします。</p>
+<pre><code>git commit --allow-empty -m "Trigger GitHub Pages redeploy"
+git push origin main
+</code></pre>
+✅ **これでGitHub Pagesが強制的に再構築され、最新の内容が反映されるはず！**
+
