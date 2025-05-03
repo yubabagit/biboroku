@@ -1,0 +1,101 @@
+---
+layout: page
+title: VSCodeについて
+---
+
+<link rel="stylesheet" href="assets/css/guide.css" />
+
+<h1>💻 VSCodeについて</h1>
+<p>このページでは、VSCodeの便利な機能や拡張機能についてまとめています。</p>
+
+<h2>🔧 VSCodeの便利な機能</h2>
+<ul>
+  <li>
+    🌸 <strong>Japanese Language Pack for Visual Studio Code:</strong>
+    <p>
+      Visual Studio
+      Codeを日本語化するための拡張機能です。メニューやUIが日本語表示になるので、より使いやすくなります。
+    </p>
+    <ol>
+      <li>
+        <strong>拡張機能のインストール:</strong>「Extensions」タブで「Japanese
+        Language Pack」を検索し、インストールします。
+      </li>
+      <li>
+        <strong>表示言語の設定:</strong>VSCodeで「Ctrl + Shift +
+        P」を押してコマンドパレットを開き、「Configure Display
+        Language」を選択します。日本語を選ぶことで言語が切り替わります。
+      </li>
+    </ol>
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja"
+      target="_blank"
+      >Visual Studio Marketplaceで詳細を見る</a
+    >
+  </li>
+  <li>
+    ✨ <strong>Prettier:</strong>
+    <p>
+      コードを自動的に整形してくれる拡張機能で、一貫性を保ちながら効率よく作業できます。保存時に自動でコードを美しく整形する機能があり、チームでの共同作業にも役立ちます。
+    </p>
+    <ol>
+      <li>
+        <strong>拡張機能のインストール:</strong
+        >「Extensions」タブで「Prettier」を検索し、「Prettier – Code
+        formatter」をインストールします。
+      </li>
+      <li>
+        <strong>保存時の自動整形を有効化:</strong
+        >VSCode設定で`editor.formatOnSave`を`true`に設定し、保存時にコードが自動整形されるようにします。
+      </li>
+      <li>
+        <strong>デフォルトフォーマッターを設定:</strong
+        >`editor.defaultFormatter`で`esbenp.prettier-vscode`を選択し、Prettierを使用するよう指定します。
+      </li>
+      <li>
+        <strong>カスタム設定:</strong
+        >`.prettierrc`ファイルで独自の整形ルールを設定し、プロジェクトに合わせて調整します。
+      </li>
+      <li>
+        <strong>補足:</strong>
+        一部だけフォーマッターをかけたい場合は、VSCodeで対象コードを選択し、右クリックメニューから「フォーマッターでフォーマット」を選択します。または、選択範囲だけフォーマットするショートカット（Windowsなら`Shift
+        + Alt + F`）を使用することも可能です。
+        ※これらの方法は、VSCodeが提供する基本的な機能であり、Prettier独自の機能ではありません。
+      </li>
+    </ol>
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode"
+      target="_blank"
+      >Visual Studio Marketplaceで詳細を見る</a
+    >
+  </li>
+  <li>
+    💡 <strong>Workspace Explorer:</strong>
+    <p>
+      VSCode上でワークスペースの切り替えを簡単に管理できる拡張機能です。複数のプロジェクトを効率的に切り替えたり、ワークスペースを保存して整理することができます。
+    </p>
+    <ol>
+      <li>
+        <strong>拡張機能のインストール:</strong>「Extensions」タブで「Workspace
+        Explorer」を検索し、インストールします。
+      </li>
+      <li>
+        <strong>ワークスペース保存ディレクトリの設定:</strong
+        >VSCode設定で`workspaceExplorer.workspaceStorageDirectory`を設定し、保存場所を指定します。
+      </li>
+      <li>
+        <strong>ワークスペースを作成:</strong
+        >「File」→「名前を付けてワークスペースを保存」でプロジェクトを保存します。
+      </li>
+      <li>
+        <strong>拡張機能の管理:</strong
+        >左ペインの「WORKSPACES」タブでワークスペースを切り替えたり、新しいウィンドウで開いたりできます。
+      </li>
+    </ol>
+    <a
+      href="https://marketplace.visualstudio.com/items?itemName=tomsaunders.vscode-workspace-explorer"
+      target="_blank"
+      >Visual Studio Marketplaceで詳細を見る</a
+    >
+  </li>
+</ul>
