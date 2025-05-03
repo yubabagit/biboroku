@@ -3,9 +3,7 @@ layout: page
 title: 備忘録の書き方
 ---
 
-<link rel="stylesheet" href="assets/css/memo-guide.css">
-
-<a href="index.html" class="back-home">🏠 ホームに戻る</a>
+<link rel="stylesheet" href="assets/css/memo-guide.css" />
 
 <h1>📝 備忘録の書き方</h1>
 <p>このページでは、備忘録サイトの構成や編集方法をまとめています。</p>
@@ -28,17 +26,21 @@ title: 備忘録の書き方
 <h2>🔗 リンク先を編集したい場合</h2>
 <p>各ページのファイルを編集できます：</p>
 <ul>
-    <li><a href="git-guide.html">🛠 Gitについて</a>：git-guide.html</li>
-    <li><a href="angular-guide.html">⚡ Angularについて</a>：angular-guide.html</li>
-    <li><a href="memo-guide.html">📝 備忘録の書き方</a>：memo-guide.html</li>
+  <li><a href="git-guide.html">🛠 Gitについて</a>：git-guide.html</li>
+  <li>
+    <a href="angular-guide.html">⚡ Angularについて</a>：angular-guide.html
+  </li>
+  <li><a href="memo-guide.html">📝 備忘録の書き方</a>：memo-guide.html</li>
 </ul>
 
 <h2>🚀 ローカルで備忘録を確認したい場合</h2>
 <ol>
-  <li>💻 ローカルサーバーを起動：
+  <li>
+    💻 ローカルサーバーを起動：
     <pre><code>bundle exec jekyll serve</code></pre>
   </li>
-  <li>🌐 ローカルでサイトを表示：
+  <li>
+    🌐 ローカルでサイトを表示：
     <pre><code>http://127.0.0.1:4000/</code></pre>
   </li>
 </ol>
@@ -46,25 +48,33 @@ title: 備忘録の書き方
 <h2>🛠 ローカルからGitHubに反映させる手順</h2>
 <p>変更したファイルをGitHubリポジトリにアップロードする流れを説明します。</p>
 <ol>
-  <li>🔍 変更されたファイルを確認：
+  <li>
+    🔍 変更されたファイルを確認：
     <pre><code>git status</code></pre>
   </li>
-  <li>📌 変更をステージング：
+  <li>
+    📌 変更をステージング：
     <pre><code>git add .</code></pre>
   </li>
-  <li>💾 変更をコミット：
+  <li>
+    💾 変更をコミット：
     <pre><code>git commit -m "コミットコメント"</code></pre>
   </li>
-  <li>🌍 GitHubにPush：
+  <li>
+    🌍 GitHubにPush：
     <pre><code>git push origin main</code></pre>
   </li>
 </ol>
 
 <h2>🔄 GitHub Pagesに反映されない場合の対処法</h2>
-<p>ローカルでは変更が反映されるのに、GitHub Pages上では更新されない場合の解決策。</p>
+<p>
+  ローカルでは変更が反映されるのに、GitHub Pages上では更新されない場合の解決策。
+</p>
 
 <h3>🧹 キャッシュの削除</h3>
-<p>ブラウザキャッシュが原因で古いページが表示される場合があります。以下を試してください：</p>
+<p>
+  ブラウザキャッシュが原因で古いページが表示される場合があります。以下を試してください：
+</p>
 <ul>
   <li>🔄 <strong>Ctrl + Shift + R</strong> で強制リロード</li>
   <li>🕵️ シークレットモードでアクセス</li>
@@ -72,13 +82,18 @@ title: 備忘録の書き方
 </ul>
 
 <h3>🚀 GitHub Pagesのデプロイを強制リロード</h3>
-<p>GitHubのデプロイ処理が遅延している場合は、以下のコマンドで強制的に再デプロイします。</p>
+<p>
+  GitHubのデプロイ処理が遅延している場合は、以下のコマンドで強制的に再デプロイします。
+</p>
 <pre><code>git commit --allow-empty -m "Trigger GitHub Pages redeploy"
 git push origin main
 </code></pre>
 
 <h2>🔧 Jekyllをリビルドする方法</h2>
-<p>Jekyllの変更がローカル環境やGitHub Pagesに反映されない場合、リビルドを行います。</p>
+<p>
+  Jekyllの変更がローカル環境やGitHub
+  Pagesに反映されない場合、リビルドを行います。
+</p>
 
 <h3>🗑️ キャッシュの削除</h3>
 <ul>
@@ -93,4 +108,3 @@ git push origin main
   <li>以下のコマンドを実行してください：</li>
 </ul>
 <pre><code>bundle exec jekyll serve</code></pre>
-
