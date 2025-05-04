@@ -1,0 +1,369 @@
+---
+layout: page
+title: MyBatisについて
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spring Boot + MyBatis + AWS MySQL連携手順 (Gradle)</title>
+    <link rel="stylesheet" href="assets\css\myBatis.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Spring Boot環境でのAWS MySQLアクセス（MyBatis使用、Gradle版）</h1>
+
+      <h2>手順</h2>
+      <ol>
+        <li>
+          依存関係の追加:
+          <strong>依存関係の追加:</strong>
+          <code>build.gradle</code>にMyBatisとMySQL
+          Connector/Jの依存関係を追加します。
+        </li>
+        <li>
+          <strong>DataSourceの設定:</strong>
+          <code>application.properties</code
+          >または<code>application.yml</code>にデータベース接続情報を設定します。
+        </li>
+        <li>
+          <strong>Mapperインターフェースの作成:</strong>
+          SQLを実行するMapperインターフェースを定義します。
+        </li>
+        <li>
+          <strong>SQL定義ファイルの作成:</strong>
+          Mapperインターフェースに対応するSQLクエリを記述したXMLファイルを作成します。
+        </li>
+        <li>
+          <strong>Serviceクラスの作成:</strong>
+          Mapperインターフェースを呼び出し、ビジネスロジックを実装するServiceクラスを作成します。
+        </li>
+        <li>
+          <strong>Controllerクラスの作成:</strong>
+          リクエストを受け付け、Serviceクラスを呼び出すControllerクラスを作成します。
+        </li>
+        <li>
+          <strong>MyBatisの設定 (必要に応じて):</strong>
+          MyBatisの設定をJavaConfigまたはXMLで行います。Spring
+          BootとMyBatisの連携では、基本的な設定は自動で行われるため、通常は明示的な設定は不要です。
+        </li>
+      </ol>
+
+      <h2>サンプルソース</h2>
+
+      <h3>
+        1. <code>build.gradle</code> <small>（Gradleの設定ファイル）</small>
+      </h3>
+      <p>
+        このファイルは、プロジェクトに必要なライブラリ（依存関係）やプラグインを定義します。MyBatisとMySQLのドライバを追加することで、Spring
+        Bootからこれらの機能を利用できるようになります。
+      </p>
+      <pre><code class="language-gradle">plugins {
+    id 'org.springframework.boot' version '3.2.5'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3' // MyBatis Spring Boot Starterの依存関係
+    implementation 'mysql:mysql-connector-j' // MySQL JDBCドライバの依存関係
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+</code></pre>
+
+      <h3>
+        2. <code>src/main/resources/application.properties</code> または
+        <code>src/main/resources/application.yml</code>
+        <small>（設定ファイル）</small>
+      </h3>
+      <p>
+        このファイルには、データベースへの接続情報やMyBatisの設定などを記述します。Spring
+        Bootはこれらの設定を読み込んで、データベースとの連携を自動的に行います。
+      </p>
+      <h4><code>src/main/resources/application.properties</code> の例:</h4>
+      <pre><code class="language-properties">spring.datasource.url=jdbc:mysql://your-aws-mysql-endpoint:3306/your_database_name?serverTimezone=JST&useSSL=true&verifyServerCertificate=true
+spring.datasource.username=your_mysql_username
+spring.datasource.password=your_mysql_password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+mybatis.mapper-locations=classpath:mappers/*.xml
+</code></pre>
+      <p>または <code>src/main/resources/application.yml</code> の例:</p>
+      <pre><code class="language-yaml">spring:
+  datasource:
+    url: jdbc:mysql://your-aws-mysql-endpoint:3306/your_database_name?serverTimezone=JST&useSSL=true&verifyServerCertificate=true
+    username: your_mysql_username
+    password: your_mysql_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+</code></pre>
+      <p class="note">
+        <strong>注意:</strong>
+        <code>your-aws-mysql-endpoint</code
+        >、<code>your_database_name</code>、<code>your_mysql_username</code>、<code
+          >your_mysql_password</code
+        >
+        は、ご自身のAWS MySQLインスタンスの情報に置き換えてください。
+      </p>
+      <p class="note">
+        <code>mybatis.mapper-locations</code>
+        は、SQL定義ファイル（後述）の場所を指定しています。
+      </p>
+
+      <h3>
+        3. Mapperインターフェース
+        (<code>src/main/java/com/example/mybatisawsmysql/mapper/UserMapper.java</code>)
+        <small>（SQLとJavaの橋渡し）</small>
+      </h3>
+      <p>
+        Mapperインターフェースは、JavaのメソッドとSQLクエリを紐付ける役割を持ちます。このインターフェースで定義したメソッドを呼び出すことで、対応するSQLクエリが実行されます。<code
+          >@Mapper</code
+        >
+        アノテーションによって、SpringにこのインターフェースがMyBatisのMapperであることを認識させます。
+      </p>
+      <pre><code class="language-java">package com.example.mybatisawsmysql.mapper;
+
+import com.example.mybatisawsmysql.model.User;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
+
+@Mapper
+public interface UserMapper {
+
+    @Select("SELECT id, name, email FROM users WHERE id = #{id}")
+    User getUserById(Long id);
+
+    @Select("SELECT id, name, email FROM users")
+    List&lt;User&gt; getAllUsers();
+
+    // 必要に応じて他のCRUD操作（Insert, Update, Delete）のメソッドを定義します。
+    // 例えば、@Insert, @Update, @Delete アノテーションなどが利用できます。
+}
+</code></pre>
+      <p>
+        <code>@Select</code>
+        アノテーションは、SELECTクエリを直接メソッドに記述する方法です。<code
+          >#{id}</code
+        >
+        はプレースホルダーで、メソッドの引数
+        <code>id</code> の値がSQLに埋め込まれます。
+      </p>
+
+      <h3>
+        4. SQL定義ファイル
+        (<code>src/main/resources/mappers/UserMapper.xml</code>)
+        <small>（SQLを記述するファイル）</small>
+      </h3>
+      <p>
+        SQL定義ファイルには、Mapperインターフェースに対応するSQLクエリを記述します。複雑なSQLや動的なSQLを記述する場合に便利です。<code
+          >namespace</code
+        >
+        属性は、対応するMapperインターフェースの完全修飾名を指定します。各
+        <code>&lt;select&gt;</code> タグの
+        <code>id</code>
+        属性は、Mapperインターフェースのメソッド名と一致させることで紐付けられます。
+      </p>
+      <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;
+&lt;!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;
+&lt;mapper namespace="com.example.mybatisawsmysql.mapper.UserMapper"&gt;
+
+    &lt;select id="getUserById" parameterType="long" resultType="com.example.mybatisawsmysql.model.User"&gt;
+        SELECT id, name, email
+        FROM users
+        WHERE id = #{id}
+    &lt;/select&gt;
+
+    &lt;select id="getAllUsers" resultType="com.example.mybatisawsmysql.model.User"&gt;
+        SELECT id, name, email
+        FROM users
+    &lt;/select&gt;
+
+&lt;/mapper&gt;
+</code></pre>
+      <p>
+        <code>parameterType</code>
+        属性は、SQLに渡すパラメータの型を指定します。<code>resultType</code>
+        属性は、SQLの実行結果をマッピングするJavaのクラスを指定します。
+      </p>
+
+      <h3>
+        5. Modelクラス
+        (<code>src/main/java/com/example/mybatisawsmysql/model/User.java</code>)
+        <small>（データの入れ物）</small>
+      </h3>
+      <p>
+        Modelクラスは、データベースのテーブルのレコードに対応するJavaのクラスです。データの受け渡しに使われます。通常、テーブルのカラムに対応するフィールドと、それらのゲッター・セッターを持ちます。
+      </p>
+      <pre><code class="language-java">package com.example.mybatisawsmysql.model;
+
+public class User {
+    private Long id;
+    private String name;
+    private String email;
+
+    // デフォルトコンストラクタ（MyBatisが結果をマッピングする際に必要）
+    public User() {
+    }
+
+    // コンストラクタ
+    public User(Long id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    // ゲッターとセッター（フィールドへのアクセスを提供）
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+</code></pre>
+
+      <h3>
+        6. Serviceクラス
+        (<code>src/main/java/com/example/mybatisawsmysql/service/UserService.java</code>)
+        <small>（ビジネスロジックの実装）</small>
+      </h3>
+      <p>
+        Serviceクラスは、アプリケーションのビジネスロジックを実装する場所です。ここでは、Mapperインターフェースを呼び出してデータベースからデータを取得し、必要に応じて加工したり、他の処理を行ったりします。<code
+          >@Service</code
+        >
+        アノテーションによって、SpringにこのクラスがServiceであることを認識させます。
+      </p>
+      <pre><code class="language-java">package com.example.mybatisawsmysql.service;
+
+import com.example.mybatisawsmysql.mapper.UserMapper;
+import com.example.mybatisawsmysql.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+public class UserService {
+
+    @Autowired
+    private UserMapper userMapper; // Springの依存性注入機能により、UserMapperインターフェースの実装が自動的に注入されます。
+
+    @Transactional(readOnly = true) // このメソッドが読み取り専用のトランザクションであることを示します。データベースの状態を変更しない処理であることを明示します。
+    public User getUserById(Long id) {
+        return userMapper.getUserById(id); // MapperインターフェースのgetUserByIdメソッドを呼び出し、指定されたIDのユーザー情報を取得します。
+    }
+
+    @Transactional(readOnly = true)
+    public List&lt;User&gt; getAllUsers() {
+        return userMapper.getAllUsers(); // MapperインターフェースのgetAllUsersメソッドを呼び出し、すべてのユーザー情報を取得します。
+    }
+
+    // 必要に応じて、データの登録、更新、削除などのビジネスロジックを追加します。
+}
+</code></pre>
+
+      <h3>
+        7. Controllerクラス
+        (<code>src/main/java/com/example/mybatisawsmysql/controller/UserController.java</code>)
+        <small>（APIのエンドポイント）</small>
+      </h3>
+      <p>
+        Controllerクラスは、外部からのリクエストを受け付け、アプリケーションの処理を呼び出す役割を持ちます。<code
+          >@RestController</code
+        >
+        アノテーションは、このクラスがRESTfulなAPIのコントローラであることを示します。<code
+          >@RequestMapping("/users")</code
+        >
+        は、このコントローラが処理するリクエストのベースURLを指定します。
+      </p>
+      <pre><code class="language-java">package com.example.mybatisawsmysql.controller;
+
+import com.example.mybatisawsmysql.model.User;
+import com.example.mybatisawsmysql.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/users") // このコントローラが処理するリクエストのベースURLを "/users" に設定します。
+public class UserController {
+
+    @Autowired
+    private UserService userService; // Springの依存性注入により、UserServiceのインスタンスが自動的に注入されます。
+
+    @GetMapping("/{id}") // HTTPのGETメソッドで "/users/{id}" の形式のリクエストを受け付けます。{id} はパスパラメータとして扱われます。
+    public User getUserById(@PathVariable Long id) {
+        return userService.getUserById(id); // UserServiceのgetUserByIdメソッドを呼び出し、指定されたIDのユーザー情報を取得して返します。Springは自動的にこの戻り値をJSON形式に変換してレスポンスとして返します。
+    }
+
+    @GetMapping // HTTPのGETメソッドで "/users" の形式のリクエストを受け付けます。
+    public List&lt;User&gt; getAllUsers() {
+        return userService.getAllUsers(); // UserServiceのgetAllUsersメソッドを呼び出し、すべてのユーザー情報を取得して返します。Springは自動的にこのリストをJSON形式に変換してレスポンスとして返します。
+    }
+}
+</code></pre>
+
+      <h2>補足</h2>
+      <ul>
+        <li>
+          上記は基本的なCRUD操作の例です。必要に応じて、insert、update、deleteなどの操作をMapperインターフェースとSQL定義ファイルに追加してください。
+        </li>
+        <li>
+          MyBatisの設定は、<code>application.properties</code>または<code>application.yml</code>で行うことができます。例えば、ログの設定やTypeHandlerの登録などが可能です。
+        </li>
+        <li>
+          AWSのMySQLデータベースへの接続には、セキュリティグループの設定やIAMユーザーの権限設定が必要になる場合があります。AWSのドキュメントを参照して適切に設定してください。
+        </li>
+        <li>
+          エラーハンドリングやトランザクション管理も重要な要素です。Springの機能を利用して適切に実装してください。
+        </li>
+      </ul>
+    </div>
+    <script src="assets/js/highlight.min.js"></script>
+    <script>
+      hljs.highlightAll();
+    </script>
+  </body>
+</html>
