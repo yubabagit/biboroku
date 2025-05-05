@@ -1,3 +1,8 @@
+---
+layout: page
+title: angularについて
+---
+
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -7,7 +12,8 @@
       Angular
       ngTemplateOutlet徹底解説：再利用性と柔軟性を高めるテンプレート活用術
     </title>
-    <style>
+    <link rel="stylesheet" href="assets\css\myBatis.css" />
+    <!-- <style>
       body {
         font-family: "Arial", sans-serif;
         line-height: 1.7;
@@ -73,7 +79,7 @@
         border-radius: 5px;
         background-color: white;
       }
-    </style>
+    </style> -->
   </head>
   <body>
     <h1>
@@ -116,8 +122,8 @@
     </p>
     <div class="code-block">
       <code>
-        &lt;ng-template #myTemplate&gt;&lt;br /&gt; &nbsp;
-        &lt;p&gt;これは再利用可能なテンプレートです！&lt;/p&gt;&lt;br /&gt;
+        &lt;ng-template #myTemplate&gt;<br />
+        &nbsp; &lt;p&gt;これは再利用可能なテンプレートです！&lt;/p&gt;<br />
         &lt;/ng-template&gt;
       </code>
       <span class="code-caption">#myTemplateとしてテンプレートを定義</span>
@@ -133,10 +139,10 @@
     </p>
     <div class="code-block">
       <code>
-        &lt;div&gt;&lt;br /&gt; &nbsp;
-        &lt;h3&gt;ここにテンプレートを表示します:&lt;/h3&gt;&lt;br /&gt; &nbsp;
-        &lt;ng-container
-        *ngTemplateOutlet="myTemplate"&gt;&lt;/ng-container&gt;&lt;br /&gt;
+        &lt;div&gt;<br />
+        &nbsp; &lt;h3&gt;ここにテンプレートを表示します:&lt;/h3&gt;<br />
+        &nbsp; &lt;ng-container
+        *ngTemplateOutlet="myTemplate"&gt;&lt;/ng-container&gt;<br />
         &lt;/div&gt;
       </code>
       <span class="code-caption">
@@ -157,13 +163,18 @@
     </p>
     <div class="code-block">
       <code>
-        &lt;ng-template #userTemplate let-user&gt;&lt;br /&gt; &nbsp;
-        &lt;p&gt;名前: {{ user.name }}&lt;/p&gt;&lt;br /&gt; &nbsp;
-        &lt;p&gt;年齢: {{ user.age }}&lt;/p&gt;&lt;br /&gt;
-        &lt;/ng-template&gt;&lt;br /&gt;&lt;br /&gt; &lt;div&gt;&lt;br /&gt;
-        &nbsp; &lt;h3&gt;ユーザー情報:&lt;/h3&gt;&lt;br /&gt; &nbsp;
-        &lt;ng-container *ngTemplateOutlet="userTemplate; context: { $implicit:
-        userData }"&gt;&lt;/ng-container&gt;&lt;br /&gt; &lt;/div&gt;
+        &lt;ng-template #userTemplate let-user&gt;<br />
+        &nbsp; &lt;p&gt;名前: &#123;&#123; user.name &#125;&#125;&lt;/p&gt;<br />
+        &nbsp; &lt;p&gt;氏名: &#123;&#123; first &#125;&#125; &#123;&#123;last
+        &#125;&#125;&lt;/p&gt &nbsp;
+        <br />
+        &nbsp; &lt;p&gt;年齢: &#123;&#123; user.age &#125;&#125;&lt;/p&gt;<br />
+        &lt;/ng-template&gt;<br /><br />
+        &lt;div&gt;<br />
+        &nbsp; &lt;h3&gt;ユーザー情報:&lt;/h3&gt;<br />
+        &nbsp; &lt;ng-container *ngTemplateOutlet="userTemplate; context: {
+        $implicit: userData }"&gt;&lt;/ng-container&gt;<br />
+        &lt;/div&gt;
       </code>
       <span class="code-caption">
         contextを使ってuserDataをテンプレートに渡す
@@ -175,10 +186,12 @@
       というデータオブジェクトを
       <code>$implicit</code>
       という特別な名前で渡しています。テンプレート側では、<code>let-user</code>
-      という書き方でこのデータを受け取り、<code>{{ user.name }}</code> や
-      <code>{{ user.age }}</code> のようにして表示できます。<code
-        >$implicit</code
+      という書き方でこのデータを受け取り、<code
+        >&#123;&#123; user.name &#125;&#125;</code
       >
+      や
+      <code>&#123;&#123; user.age &#125;&#125;</code>
+      のようにして表示できます。<code>$implicit</code>
       は、渡すデータが一つだけの場合によく使われる名前です。
     </p>
 
@@ -191,13 +204,16 @@
     </p>
     <div class="code-block">
       <code>
-        &lt;ng-template #fullNameTemplate let-first
-        let-last="lastName"&gt;&lt;br /&gt; &nbsp; &lt;p&gt;氏名: {{ first }} {{
-        last }}&lt;/p&gt;&lt;br /&gt; &lt;/ng-template&gt;&lt;br /&gt;&lt;br
-        /&gt; &lt;div&gt;&lt;br /&gt; &nbsp;
-        &lt;h3&gt;フルネーム:&lt;/h3&gt;&lt;br /&gt; &nbsp; &lt;ng-container
-        *ngTemplateOutlet="fullNameTemplate; context:
-        userInfo"&gt;&lt;/ng-container&gt;&lt;br /&gt; &lt;/div&gt;
+        &lt;ng-template #fullNameTemplate let-first let-last="lastName"&gt;<br />
+        <div>
+          &nbsp;&nbsp; &lt;p&gt;氏名: &#123;&#123; first &#125;&#125;
+          &#123;&#123; last &#125;&#125;&lt;/p&gt;
+        </div>
+        &lt;/ng-template&gt;<br />&lt;br /&gt; &lt;div&gt;<br />
+        &nbsp; &lt;h3&gt;フルネーム:&lt;/h3&gt;<br />
+        &nbsp; &lt;ng-container *ngTemplateOutlet="fullNameTemplate; context:
+        userInfo"&gt;&lt;/ng-container&gt;<br />
+        &lt;/div&gt;
       </code>
       <span class="code-caption">
         userInfoオブジェクトのプロパティを個別の変数として受け取る
@@ -225,19 +241,23 @@
     </p>
     <div class="code-block">
       <code>
-        &lt;ng-template #messageTemplate let-message let-type="class"&gt;&lt;br
-        /&gt; &nbsp; &lt;p [class]="type"&gt;メッセージ: {{ message
-        }}&lt;/p&gt;&lt;br /&gt; &lt;/ng-template&gt;&lt;br /&gt;&lt;br /&gt;
-        &lt;div&gt;&lt;br /&gt; &nbsp;
-        &lt;h3&gt;メッセージ表示:&lt;/h3&gt;&lt;br /&gt; &nbsp;
-        &lt;ng-container&lt;br /&gt; &nbsp; &nbsp;
-        *ngTemplateOutlet="messageTemplate"&lt;br /&gt; &nbsp; &nbsp;
-        [ngTemplateOutletContext]="{ id: 0, message: '成功！', class: 'alert'
-        }"&lt;br /&gt; &nbsp; &gt;&lt;/ng-container&gt;&lt;br /&gt; &nbsp;
-        &lt;ng-container&lt;br /&gt; &nbsp; &nbsp;
-        *ngTemplateOutlet="messageTemplate"&lt;br /&gt; &nbsp; &nbsp;
-        [ngTemplateOutletContext]="{ id: 1, message: 'お知らせ', class: 'card'
-        }"&lt;br /&gt; &nbsp; &gt;&lt;/ng-container&gt;&lt;br /&gt; &lt;/div&gt;
+        &lt;ng-template #messageTemplate let-message let-type="class"<br />
+        &nbsp; &lt;p [class]="type"&gt;メッセージ: &#123;&#123; message
+        &#125;&#125;&lt;/p&gt;<br />
+        &lt;/ng-template&gt;<br /><br />
+        &lt;div&gt;<br />
+        &nbsp; &lt;h3&gt;メッセージ表示:&lt;/h3&gt;<br />
+        &nbsp; &lt;ng-container<br />
+        &nbsp; &nbsp; *ngTemplateOutlet="messageTemplate"<br />
+        &nbsp; &nbsp; [ngTemplateOutletContext]="{ id: 0, message: '成功！',
+        class: 'alert' }"<br />
+        &nbsp; &gt;&lt;/ng-container&gt;<br />
+        &nbsp; &lt;ng-container<br />
+        &nbsp; &nbsp; *ngTemplateOutlet="messageTemplate"<br />
+        &nbsp; &nbsp; [ngTemplateOutletContext]="{ id: 1, message: 'お知らせ',
+        class: 'card' }"<br />
+        &nbsp; &gt;&lt;/ng-container&gt;<br />
+        &lt;/div&gt;
       </code>
       <span class="code-caption">
         オブジェクトリテラルを直接 ngTemplateOutletContext に指定
