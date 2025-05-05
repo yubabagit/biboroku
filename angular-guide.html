@@ -1,4 +1,258 @@
----
-layout: page
-title: Agularについて
----
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Angular
+      ngTemplateOutlet徹底解説：再利用性と柔軟性を高めるテンプレート活用術
+    </title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        line-height: 1.7;
+        margin: 30px;
+        color: #333;
+        background-color: #f8f8f8;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #0056b3;
+      }
+      h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+      h2 {
+        font-size: 1.8em;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #ccc;
+        padding-bottom: 5px;
+      }
+      h3 {
+        font-size: 1.4em;
+        margin-top: 20px;
+        margin-bottom: 10px;
+      }
+      p {
+        margin-bottom: 15px;
+      }
+      .code-block {
+        background-color: #e9ecef;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+        font-family: "Courier New", monospace;
+        margin-bottom: 20px;
+      }
+      .code-caption {
+        font-size: 0.9em;
+        color: #6c757d;
+        margin-top: 5px;
+        display: block;
+      }
+      .important {
+        font-weight: bold;
+        color: #dc3545;
+      }
+      .cursor-pointer {
+        cursor: pointer;
+      }
+      .alert {
+        color: darkred;
+        background-color: lightcoral;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .card {
+        border: 1px solid #ccc;
+        padding: 15px;
+        border-radius: 5px;
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      Angular
+      ngTemplateOutlet徹底解説：再利用性と柔軟性を高めるテンプレート活用術
+    </h1>
+
+    <p>
+      Angularの
+      <code>ngTemplateOutlet</code>
+      は、あらかじめ定義しておいたHTMLの構造（テンプレート）を、別の場所で必要な時に表示するための便利な機能（ディレクティブ）です。これを使うと、同じようなUIを何度も書く手間が省け、条件によって表示する内容を変えたり、テンプレートにデータを渡して表示内容をカスタマイズしたりすることができます。
+    </p>
+
+    <h2>ngTemplateOutletの基本的な概念</h2>
+    <p>
+      <code>ngTemplateOutlet</code> を理解する上で大切なのは、
+      <code>&lt;ng-template&gt;</code>
+      という特別な要素と組み合わせて使うということです。
+    </p>
+    <ul>
+      <li>
+        <strong>&lt;ng-template&gt;</strong>:
+        再利用したいHTMLの構造を定義するための要素です。この要素自体は画面に直接表示されず、中身のHTMLが「テンプレート」として保管されます。テンプレートには、後から参照できるように
+        <code>#</code>
+        を使って名前（テンプレート変数）を付けます。
+      </li>
+      <li>
+        <strong>ngTemplateOutlet</strong>:
+        <code>&lt;ng-template&gt;</code>
+        で定義したテンプレートを参照して、指定した場所にその内容を表示（レンダリング）するための指示（ディレクティブ）です。
+      </li>
+    </ul>
+
+    <h3>基本的な使い方</h3>
+    <p>
+      まず、再利用したいHTMLのひな形（テンプレート）を
+      <code>&lt;ng-template&gt;</code>
+      で囲んで定義します。ここでは、<code>#myTemplate</code>
+      という名前を付けています。
+    </p>
+    <div class="code-block">
+      <code>
+        &lt;ng-template #myTemplate&gt;&lt;br /&gt; &nbsp;
+        &lt;p&gt;これは再利用可能なテンプレートです！&lt;/p&gt;&lt;br /&gt;
+        &lt;/ng-template&gt;
+      </code>
+      <span class="code-caption">#myTemplateとしてテンプレートを定義</span>
+    </div>
+
+    <p>
+      次に、このテンプレートを実際に表示したい場所で
+      <code>ngTemplateOutlet</code>
+      ディレクティブを使います。<code>*ngTemplateOutlet="myTemplate"</code>
+      と書くことで、<code>myTemplate</code> の内容がこの場所に表示されます。
+      <code>&lt;ng-container&gt;</code>
+      は、HTMLの構造に影響を与えずに要素をグループ化するために使われる要素です。
+    </p>
+    <div class="code-block">
+      <code>
+        &lt;div&gt;&lt;br /&gt; &nbsp;
+        &lt;h3&gt;ここにテンプレートを表示します:&lt;/h3&gt;&lt;br /&gt; &nbsp;
+        &lt;ng-container
+        *ngTemplateOutlet="myTemplate"&gt;&lt;/ng-container&gt;&lt;br /&gt;
+        &lt;/div&gt;
+      </code>
+      <span class="code-caption">
+        *ngTemplateOutletでmyTemplateの内容を表示
+      </span>
+    </div>
+    <p>
+      <code>&lt;ng-container&gt;</code>
+      は、最終的なHTMLには出力されないため、レイアウトを調整する際に便利です。
+    </p>
+
+    <h2>データの受け渡し：ngTemplateOutletContext</h2>
+    <p>
+      <code>ngTemplateOutlet</code>
+      の便利な機能の一つに、テンプレートを表示する際に、動的なデータ（プログラムで変わる情報）を渡せるという点があります。これには
+      <code>[ngTemplateOutletContext]</code>
+      を使います。
+    </p>
+    <div class="code-block">
+      <code>
+        &lt;ng-template #userTemplate let-user&gt;&lt;br /&gt; &nbsp;
+        &lt;p&gt;名前: {{ user.name }}&lt;/p&gt;&lt;br /&gt; &nbsp;
+        &lt;p&gt;年齢: {{ user.age }}&lt;/p&gt;&lt;br /&gt;
+        &lt;/ng-template&gt;&lt;br /&gt;&lt;br /&gt; &lt;div&gt;&lt;br /&gt;
+        &nbsp; &lt;h3&gt;ユーザー情報:&lt;/h3&gt;&lt;br /&gt; &nbsp;
+        &lt;ng-container *ngTemplateOutlet="userTemplate; context: { $implicit:
+        userData }"&gt;&lt;/ng-container&gt;&lt;br /&gt; &lt;/div&gt;
+      </code>
+      <span class="code-caption">
+        contextを使ってuserDataをテンプレートに渡す
+      </span>
+    </div>
+    <p>
+      <code>context</code>
+      という仕組みを使ってデータを渡します。ここでは、<code>userData</code>
+      というデータオブジェクトを
+      <code>$implicit</code>
+      という特別な名前で渡しています。テンプレート側では、<code>let-user</code>
+      という書き方でこのデータを受け取り、<code>{{ user.name }}</code> や
+      <code>{{ user.age }}</code> のようにして表示できます。<code
+        >$implicit</code
+      >
+      は、渡すデータが一つだけの場合によく使われる名前です。
+    </p>
+
+    <h3>複数の変数を渡す場合</h3>
+    <p>
+      複数のデータを渡したい場合は、<code>context</code>
+      に複数のプロパティを持ったオブジェクトを指定し、テンプレート側でそれぞれのプロパティに対応する名前（エイリアス）を
+      <code>let-</code>
+      を使って定義します。
+    </p>
+    <div class="code-block">
+      <code>
+        &lt;ng-template #fullNameTemplate let-first
+        let-last="lastName"&gt;&lt;br /&gt; &nbsp; &lt;p&gt;氏名: {{ first }} {{
+        last }}&lt;/p&gt;&lt;br /&gt; &lt;/ng-template&gt;&lt;br /&gt;&lt;br
+        /&gt; &lt;div&gt;&lt;br /&gt; &nbsp;
+        &lt;h3&gt;フルネーム:&lt;/h3&gt;&lt;br /&gt; &nbsp; &lt;ng-container
+        *ngTemplateOutlet="fullNameTemplate; context:
+        userInfo"&gt;&lt;/ng-container&gt;&lt;br /&gt; &lt;/div&gt;
+      </code>
+      <span class="code-caption">
+        userInfoオブジェクトのプロパティを個別の変数として受け取る
+      </span>
+    </div>
+    <p>
+      ここでは、<code>userInfo</code> というオブジェクトの中に
+      <code>firstName</code> と
+      <code>lastName</code>
+      というプロパティがあるとします。テンプレート側では、<code
+        >let-first="firstName"</code
+      >
+      と
+      <code>let-last="lastName"</code>
+      のようにして、それぞれのプロパティを別の名前で受け取ることができます。<code
+        >let-last="lastName"</code
+      >
+      のように、エイリアス（<code>last</code>）を指定することも可能です。
+    </p>
+
+    <h3>オブジェクトリテラルを直接渡す例</h3>
+    <p>
+      <code>[ngTemplateOutletContext]</code>
+      には、あらかじめ定義した変数だけでなく、その場で直接オブジェクトを記述することもできます。
+    </p>
+    <div class="code-block">
+      <code>
+        &lt;ng-template #messageTemplate let-message let-type="class"&gt;&lt;br
+        /&gt; &nbsp; &lt;p [class]="type"&gt;メッセージ: {{ message
+        }}&lt;/p&gt;&lt;br /&gt; &lt;/ng-template&gt;&lt;br /&gt;&lt;br /&gt;
+        &lt;div&gt;&lt;br /&gt; &nbsp;
+        &lt;h3&gt;メッセージ表示:&lt;/h3&gt;&lt;br /&gt; &nbsp;
+        &lt;ng-container&lt;br /&gt; &nbsp; &nbsp;
+        *ngTemplateOutlet="messageTemplate"&lt;br /&gt; &nbsp; &nbsp;
+        [ngTemplateOutletContext]="{ id: 0, message: '成功！', class: 'alert'
+        }"&lt;br /&gt; &nbsp; &gt;&lt;/ng-container&gt;&lt;br /&gt; &nbsp;
+        &lt;ng-container&lt;br /&gt; &nbsp; &nbsp;
+        *ngTemplateOutlet="messageTemplate"&lt;br /&gt; &nbsp; &nbsp;
+        [ngTemplateOutletContext]="{ id: 1, message: 'お知らせ', class: 'card'
+        }"&lt;br /&gt; &nbsp; &gt;&lt;/ng-container&gt;&lt;br /&gt; &lt;/div&gt;
+      </code>
+      <span class="code-caption">
+        オブジェクトリテラルを直接 ngTemplateOutletContext に指定
+      </span>
+    </div>
+    <p>
+      この例では、<code>#messageTemplate</code>
+      というテンプレートを定義し、<code>let-message</code> と
+      <code>let-type="class"</code> でデータを受け取るようにしています。<code
+        >[ngTemplateOutletContext]</code
+      >
+      には、表示するメッセージとそのスタイルを指定するオブジェクトを直接記述しています。<code
+        >id</code
+      >
+      はここでは使用していませんが、このように複数のデータをまとめて渡すことができます。
+    </p>
+  </body>
+</html>
