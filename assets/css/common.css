@@ -1,0 +1,15 @@
+#backToTopBtn {
+  z-index: 999;
+  border: none;
+  outline: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+#backToTopBtn:hover {
+  background-color: #0056b3;
+}
