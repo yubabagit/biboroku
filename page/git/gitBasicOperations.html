@@ -3,211 +3,223 @@ layout: null
 title: Git 基本操作まとめ
 ---
 
-<link rel="stylesheet" href="../../assets/css/noCode.css" />
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Git 基本操作まとめ</title>
+    <link rel="stylesheet" href="../../assets/css/noCode.css" />
+  </head>
+  <body>
+    <h1>🛠 Git 基本操作まとめ</h1>
+    <p>このページでは、Git の基本的な操作と概念をまとめています。</p>
 
-<h1>🛠 Git 基本操作まとめ</h1>
-<p>このページでは、Git の基本的な操作と概念をまとめています。</p>
+    <h2>📌 使用しているツール</h2>
+    <ul>
+      <li>🛠 <strong>Git</strong> - バージョン管理ツール</li>
+    </ul>
 
-<h2>📌 使用しているツール</h2>
-<ul>
-  <li>🛠 <strong>Git</strong> - バージョン管理ツール</li>
-</ul>
-
-<h2>💾 ローカルリポジトリの準備</h2>
-<p>
-  作業を開始する前に、ローカルリポジトリを最新の状態にし、新しいブランチを作成する手順です。
-</p>
-<ol>
-  <li>
-    🌍 リモートリポジトリの <code>developer</code> ブランチから最新情報を取得：
-    <pre><code>git fetch origin developer</code></pre>
-  </li>
-  <li>
-    🌿 最新の
-    <code>developer</code>
-    ブランチをベースに新しいブランチを作成して切り替え（例：feature/your-branch-name）：
-    <pre><code>git checkout -b feature/your-branch-name origin/developer</code></pre>
-  </li>
-</ol>
-
-<h2>🔄 基本的なワークフロー（ローカルでの作業とコミット）</h2>
-<p>ローカルでファイルの変更を追跡し、コミットする基本的な流れです。</p>
-<ol>
-  <li>
-    🔍 変更されたファイルを確認：
-    <pre><code>git status</code></pre>
-  </li>
-  <li>
-    📌 変更をステージング：
-    <pre><code>git add &lt;ファイル名&gt;</code></pre>
-    <p>すべての変更をステージングする場合：</p>
-    <pre><code>git add .</code></pre>
-  </li>
-  <li>
-    💾 変更をコミット：
-    <pre><code>git commit -m "コミットメッセージ"</code></pre>
-  </li>
-</ol>
-
-<h2>⬆️ ローカルブランチの変更をリモートリポジトリにプッシュ</h2>
-<p>
-  現在のローカルブランチ（例：feature/your-branch-name）の変更をリモートリポジトリにプッシュする方法です。
-</p>
-<pre><code>git push origin feature/your-branch-name</code></pre>
-
-<h2>🌿 ブランチ操作</h2>
-<p>ブランチの切り替えやマージに関する操作です。</p>
-<ul>
-  <li>
-    ➡️ 既存のブランチに切り替え：
-    <pre><code>git checkout &lt;ブランチ名&gt;</code></pre>
-  </li>
-  <li>
-    🌱 ローカルブランチの一覧を表示：
-    <pre><code>git branch</code></pre>
-  </li>
-  <li>
-    🤝 別のブランチ（例：feature/your-branch-name）の変更を
-    <code>developer</code>
-    ブランチにマージ（通常はプルリクエストを作成します）：
-    <pre><code>git checkout developer</code></pre>
-    <pre><code>git merge --no-ff feature/your-branch-name</code></pre>
+    <h2>💾 ローカルリポジトリの準備</h2>
     <p>
-      <small
-        ><code>--no-ff</code>
-        オプションは、マージコミットを常に作成し、履歴を明確にするために推奨されます。</small
-      >
+      作業を開始する前に、ローカルリポジトリを最新の状態にし、新しいブランチを作成する手順です。
     </p>
-  </li>
-</ul>
+    <ol>
+      <li>
+        🌍 リモートリポジトリの
+        <code>developer</code> ブランチから最新情報を取得：
+        <pre><code>git fetch origin developer</code></pre>
+      </li>
+      <li>
+        🌿 最新の
+        <code>developer</code>
+        ブランチをベースに新しいブランチを作成して切り替え（例：feature/your-branch-name）：
+        <pre><code>git checkout -b feature/your-branch-name origin/developer</code></pre>
+      </li>
+    </ol>
 
-<h2>🔍 差分の確認</h2>
-<p>変更内容を確認するためのコマンドです。</p>
-<ul>
-  <li>
-    📝 ワークツリーの変更を確認：
-    <pre><code>git diff</code></pre>
-  </li>
-  <li>
-    ✅ ステージングエリアの変更を確認：
-    <pre><code>git diff --staged</code></pre>
-  </li>
-  <li>
-    🕰️ 特定のコミット間の差分を確認：
-    <pre><code>git diff &lt;コミットID1&gt; &lt;コミットID2&gt;</code></pre>
-  </li>
-</ul>
+    <h2>🔄 基本的なワークフロー（ローカルでの作業とコミット）</h2>
+    <p>ローカルでファイルの変更を追跡し、コミットする基本的な流れです。</p>
+    <ol>
+      <li>
+        🔍 変更されたファイルを確認：
+        <pre><code>git status</code></pre>
+      </li>
+      <li>
+        📌 変更をステージング：
+        <pre><code>git add &lt;ファイル名&gt;</code></pre>
+        <p>すべての変更をステージングする場合：</p>
+        <pre><code>git add .</code></pre>
+      </li>
+      <li>
+        💾 変更をコミット：
+        <pre><code>git commit -m "コミットメッセージ"</code></pre>
+      </li>
+    </ol>
 
-<h2>📜 コミット履歴の確認</h2>
-<p>過去のコミット履歴を表示します。</p>
-<pre><code>git log</code></pre>
-<p>よく使うオプション:</p>
-<ul>
-  <li>
-    一行で簡潔に表示:
-    <pre><code>git log --oneline</code></pre>
-  </li>
-  <li>
-    ブランチのグラフを表示:
-    <pre><code>git log --graph --oneline --decorate --all</code></pre>
-  </li>
-</ul>
+    <h2>⬆️ ローカルブランチの変更をリモートリポジトリにプッシュ</h2>
+    <p>
+      現在のローカルブランチ（例：feature/your-branch-name）の変更をリモートリポジトリにプッシュする方法です。
+    </p>
+    <pre><code>git push origin feature/your-branch-name</code></pre>
 
-<h2>💥 コンフリクトの解消</h2>
-<p>マージ時にコンフリクトが発生した場合の対応です。</p>
-<ol>
-  <li>
-    ⚠️
-    <code style="color: #f4f4f4; background-color: #333">git status</code>
-    でコンフリクトしているファイルを確認します。
-  </li>
-  <li>
-    📄 該当ファイルを開き、コンフリクトマーカー (<code
-      >&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code
-    >, <code>=======</code>, <code>>>>>>>></code>) を確認し、修正します。
-  </li>
-  <li>
-    📌 修正後、<code style="color: #f4f4f4; background-color: #333"
-      >git add &lt;ファイル名&gt;</code
-    >
-    でファイルをステージングします。
-  </li>
-  <li>
-    💾
-    <code style="color: #f4f4f4; background-color: #333">git commit</code>
-    でマージコミットを完了します。
-  </li>
-</ol>
+    <h2>🌿 ブランチ操作</h2>
+    <p>ブランチの切り替えやマージに関する操作です。</p>
+    <ul>
+      <li>
+        ➡️ 既存のブランチに切り替え：
+        <pre><code>git checkout &lt;ブランチ名&gt;</code></pre>
+      </li>
+      <li>
+        🌱 ローカルブランチの一覧を表示：
+        <pre><code>git branch</code></pre>
+      </li>
+      <li>
+        🤝 別のブランチ（例：feature/your-branch-name）の変更を
+        <code>developer</code>
+        ブランチにマージ（通常はプルリクエストを作成します）：
+        <pre><code>git checkout developer</code></pre>
+        <pre><code>git merge --no-ff feature/your-branch-name</code></pre>
+        <p>
+          <small
+            ><code>--no-ff</code>
+            オプションは、マージコミットを常に作成し、履歴を明確にするために推奨されます。</small
+          >
+        </p>
+      </li>
+    </ul>
 
-<h2>🛠 便利な機能: git worktree</h2>
-<p>
-  Git 2.5 以降で使用できる
-  <code>git worktree</code>
-  は、複数のワークツリーを作成することで、複数のブランチを同時に操作できる便利な機能です。
-</p>
+    <h2>🔍 差分の確認</h2>
+    <p>変更内容を確認するためのコマンドです。</p>
+    <ul>
+      <li>
+        📝 ワークツリーの変更を確認：
+        <pre><code>git diff</code></pre>
+      </li>
+      <li>
+        ✅ ステージングエリアの変更を確認：
+        <pre><code>git diff --staged</code></pre>
+      </li>
+      <li>
+        🕰️ 特定のコミット間の差分を確認：
+        <pre><code>git diff &lt;コミットID1&gt; &lt;コミットID2&gt;</code></pre>
+      </li>
+    </ul>
 
-<h3>他のブランチと混ぜて動作確認する</h3>
-<p>
-  現在の作業ブランチに、他人のブランチの変更を一時的に混ぜて動作確認する手順です。
-</p>
-<ol>
-  <li>
-    新しいワークツリーを作成し、他人のブランチをチェックアウトします（例：feature/another-branch）：
-    <pre><code>git worktree add ../another-branch-test origin/feature/another-branch</code></pre>
-    <pre><code>cd ../another-branch-test</code></pre>
-  </li>
-  <li>
-    あなたのブランチの変更を新しいワークツリーにマージします（例：origin/feature/your-branch）：
-    <pre><code>git merge origin/feature/your-branch</code></pre>
-  </li>
-  <li>新しいワークツリーで動作確認を行います。</li>
-  <li>
-    確認が終わったら、必要に応じてワークツリーを削除します（親のワークツリーに戻ってから実行）：
-    <pre><code>cd ../your-original-repository</code></pre>
-    <pre><code>git worktree remove ../another-branch-test</code></pre>
-  </li>
-</ol>
+    <h2>📜 コミット履歴の確認</h2>
+    <p>過去のコミット履歴を表示します。</p>
+    <pre><code>git log</code></pre>
+    <p>よく使うオプション:</p>
+    <ul>
+      <li>
+        一行で簡潔に表示:
+        <pre><code>git log --oneline</code></pre>
+      </li>
+      <li>
+        ブランチのグラフを表示:
+        <pre><code>git log --graph --oneline --decorate --all</code></pre>
+      </li>
+    </ul>
 
-<h2>🤝 rebase と merge の使い分け (複数人開発時)</h2>
-<p>
-  複数人で開発している場合、共有ブランチへの影響を考慮して、<code>rebase</code>
-  よりも <code>merge</code> が推奨されることがあります。
-</p>
-<ul>
-  <li>
-    ⚠️
-    <code>rebase</code>
-    はコミット履歴を書き換えるため、共有ブランチで行うと混乱を招く可能性があります。
-  </li>
-  <li>
-    ✅
-    <code>merge</code>
-    はマージコミットを作成し、履歴をそのまま残すため、追跡が容易で安全性が高いとされています。
-  </li>
-</ul>
+    <h2>💥 コンフリクトの解消</h2>
+    <p>マージ時にコンフリクトが発生した場合の対応です。</p>
+    <ol>
+      <li>
+        ⚠️
+        <code style="color: #f4f4f4; background-color: #333">git status</code>
+        でコンフリクトしているファイルを確認します。
+      </li>
+      <li>
+        📄 該当ファイルを開き、コンフリクトマーカー (<code
+          >&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</code
+        >, <code>=======</code>, <code>>>>>>>></code>) を確認し、修正します。
+      </li>
+      <li>
+        📌 修正後、<code style="color: #f4f4f4; background-color: #333"
+          >git add &lt;ファイル名&gt;</code
+        >
+        でファイルをステージングします。
+      </li>
+      <li>
+        💾
+        <code style="color: #f4f4f4; background-color: #333">git commit</code>
+        でマージコミットを完了します。
+      </li>
+    </ol>
 
-<h2>🛑 強制プッシュ (--force の危険性)</h2>
-<p>
-  <code>git push --force</code>
-  はリモートリポジトリの履歴をローカルの履歴で上書きするため、他の開発者の作業を消してしまうリスクがあり、共有ブランチでは原則として使用すべきではありません。
-</p>
+    <h2>🛠 便利な機能: git worktree</h2>
+    <p>
+      Git 2.5 以降で使用できる
+      <code>git worktree</code>
+      は、複数のワークツリーを作成することで、複数のブランチを同時に操作できる便利な機能です。
+    </p>
 
-<h2>🛠 その他のよく使うコマンド</h2>
-<ul>
-  <li>
-    ↩️ コミット前の変更を元に戻す:
-    <pre><code>git checkout -- &lt;ファイル名&gt;</code></pre>
-  </li>
-  <li>
-    ✍️ 直前のコミットを修正:
-    <pre><code>git commit --amend</code></pre>
-  </li>
-  <li>
-    一時的な作業退避:
-    <pre><code>git stash</code></pre>
-  </li>
-  <li>
-    退避させた作業を再適用:
-    <pre><code>git stash apply</code></pre>
-  </li>
-</ul>
+    <h3>他のブランチと混ぜて動作確認する</h3>
+    <p>
+      現在の作業ブランチに、他人のブランチの変更を一時的に混ぜて動作確認する手順です。
+    </p>
+    <ol>
+      <li>
+        新しいワークツリーを作成し、他人のブランチをチェックアウトします（例：feature/another-branch）：
+        <pre><code>git worktree add ../another-branch-test origin/feature/another-branch</code></pre>
+        <pre><code>cd ../another-branch-test</code></pre>
+      </li>
+      <li>
+        あなたのブランチの変更を新しいワークツリーにマージします（例：origin/feature/your-branch）：
+        <pre><code>git merge origin/feature/your-branch</code></pre>
+      </li>
+      <li>新しいワークツリーで動作確認を行います。</li>
+      <li>
+        確認が終わったら、必要に応じてワークツリーを削除します（親のワークツリーに戻ってから実行）：
+        <pre><code>cd ../your-original-repository</code></pre>
+        <pre><code>git worktree remove ../another-branch-test</code></pre>
+      </li>
+    </ol>
+
+    <h2>🤝 rebase と merge の使い分け (複数人開発時)</h2>
+    <p>
+      複数人で開発している場合、共有ブランチへの影響を考慮して、<code
+        >rebase</code
+      >
+      よりも <code>merge</code> が推奨されることがあります。
+    </p>
+    <ul>
+      <li>
+        ⚠️
+        <code>rebase</code>
+        はコミット履歴を書き換えるため、共有ブランチで行うと混乱を招く可能性があります。
+      </li>
+      <li>
+        ✅
+        <code>merge</code>
+        はマージコミットを作成し、履歴をそのまま残すため、追跡が容易で安全性が高いとされています。
+      </li>
+    </ul>
+
+    <h2>🛑 強制プッシュ (--force の危険性)</h2>
+    <p>
+      <code>git push --force</code>
+      はリモートリポジトリの履歴をローカルの履歴で上書きするため、他の開発者の作業を消してしまうリスクがあり、共有ブランチでは原則として使用すべきではありません。
+    </p>
+
+    <h2>🛠 その他のよく使うコマンド</h2>
+    <ul>
+      <li>
+        ↩️ コミット前の変更を元に戻す:
+        <pre><code>git checkout -- &lt;ファイル名&gt;</code></pre>
+      </li>
+      <li>
+        ✍️ 直前のコミットを修正:
+        <pre><code>git commit --amend</code></pre>
+      </li>
+      <li>
+        一時的な作業退避:
+        <pre><code>git stash</code></pre>
+      </li>
+      <li>
+        退避させた作業を再適用:
+        <pre><code>git stash apply</code></pre>
+      </li>
+    </ul>
+  </body>
+</html>
