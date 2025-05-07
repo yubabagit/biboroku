@@ -111,6 +111,95 @@ title: VSCodeについて
           >Visual Studio Marketplaceで詳細を見る</a
         >
       </li>
+
+      <li>
+        🛠️ <strong>Angular Language Service:</strong>
+        <p>
+          Angular専用の拡張機能で、テンプレートのオートコンプリート、エラーの即時検出、定義へのジャンプなどを可能にします。コード品質の向上にも役立つ便利なプラグインです。
+        </p>
+        <ol>
+          <li>
+            <strong>strictTemplatesオプション:</strong>
+            <p>
+              <code>tsconfig.json</code
+              >に以下を追加すると、テンプレート型チェックを強化してバグを防ぐ効果があります：
+            </p>
+            <pre>
+    {
+      "angularCompilerOptions": {
+        "strictTemplates": true
+      }
+    }
+          </pre
+            >
+          </li>
+          <li>
+            <strong>設定例:</strong>
+            <p>
+              VSCodeの<code>settings.json</code>では、以下の設定例でAngular
+              Language Serviceをさらにカスタマイズできます：
+            </p>
+            <pre>
+    {
+      "editor.formatOnSave": true,
+      "angular.languageService.experimental": true
+    }
+          </pre
+            >
+          </li>
+        </ol>
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=Angular.ng-template"
+          target="_blank"
+        >
+          Visual Studio Marketplaceで詳細を見る
+        </a>
+      </li>
+      <li>
+        🛠️ <strong>Gradle Language Service:</strong>
+        <p>
+          Gradle用の拡張機能で、ビルドスクリプトの作業効率をぐっと高める便利なツールです。以下が主な特徴です：
+        </p>
+        <ul>
+          <li>
+            📜
+            <strong>コード補完:</strong>
+            Gradleのビルドスクリプト内で、賢く候補を提示。
+          </li>
+          <li>
+            ⚠️
+            <strong>エラー表示:</strong> スクリプト内のミスを即座にハイライト。
+          </li>
+          <li>
+            🔗
+            <strong>ジャンプ機能:</strong>
+            依存関係やタスク定義へのクイックジャンプが可能。
+          </li>
+          <li>
+            🚀
+            <strong>タスク実行:</strong>
+            拡張機能から直接Gradleタスクを実行できる。
+          </li>
+        </ul>
+        <p>
+          プロジェクトディレクトリに<code>build.gradle</code>または<code>build.gradle.kts</code>ファイルがあると、自動的に機能が有効化されます。VSCodeの設定ファイルで以下の調整もできます：
+        </p>
+        <pre>
+      {
+        "gradle.java.home": "/path/to/java/home",
+        "gradle.enableTaskQuickPick": true
+      }
+        </pre>
+        <p>
+          このプラグインを活用することで、Gradleの操作がより簡単になります！詳細は以下で確認できます：
+        </p>
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=naco-siren.gradle-language"
+          target="_blank"
+        >
+          Visual Studio Marketplaceで詳細を見る
+        </a>
+      </li>
     </ul>
     <script src="../../js/common.js"></script>
   </body>
