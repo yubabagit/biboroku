@@ -90,6 +90,44 @@ title: Git 基本操作まとめ
       </li>
     </ul>
 
+    <h2>🛠 作業退避（Git Stash）</h2>
+    <p>
+      作業中の変更を一時的に退避して、後で再適用できる便利なコマンドです！中断が必要な場面で非常に役立ちます。
+    </p>
+    <ol>
+      <li>
+        ✍️ <strong>変更を退避:</strong>
+        <p>作業中の変更を保存して一時退避します。</p>
+        <pre><code>git stash</code></pre>
+        <p>未追跡ファイルも含める場合：</p>
+        <pre><code>git stash -u</code></pre>
+      </li>
+      <li>
+        ✅ <strong>退避内容を確認:</strong>
+        <p>保存した作業内容を一覧で確認します。</p>
+        <pre><code>git stash list</code></pre>
+      </li>
+      <li>
+        🏷 <strong>名前をつけて退避:</strong>
+        <p>名前を指定して退避すると、内容がわかりやすく管理できます。</p>
+        <pre><code>git stash save "変更内容の説明"</code></pre>
+      </li>
+      <li>
+        🔄 <strong>退避内容を適用:</strong>
+        <p>指定した内容を元に戻します。</p>
+        <pre><code>git stash apply stash@{番号}</code></pre>
+        <p>適用後にリストから削除したい場合：</p>
+        <pre><code>git stash pop stash@{番号}</code></pre>
+      </li>
+      <li>
+        ❌ <strong>退避内容を削除:</strong>
+        <p>特定の退避を削除する場合：</p>
+        <pre><code>git stash drop stash@{番号}</code></pre>
+        <p>全て削除する場合：</p>
+        <pre><code>git stash clear</code></pre>
+      </li>
+    </ol>
+
     <h2>🔍 差分の確認</h2>
     <p>変更内容を確認するためのコマンドです。</p>
     <ul>
