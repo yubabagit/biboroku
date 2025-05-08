@@ -1,0 +1,110 @@
+---
+layout: null
+title: Gradleのキャッシュ問題解決方法
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gradleのキャッシュ問題解決方法</title>
+    <link rel="stylesheet" href="../../assets/css/noCode.css" />
+    <link rel="stylesheet" href="../../assets/css/common.css" />
+  </head>
+  <body>
+    <h1>🛠️ Gradleのキャッシュ問題解決方法</h1>
+    <p>
+      このページでは、Gradleでキャッシュに関連する問題を解決する方法を初心者向けに解説します。
+    </p>
+
+    <h2>🔧 キャッシュをクリアする方法</h2>
+    <p>
+      キャッシュのクリアは、Gradleで依存関係の問題を解決する基本的な方法です。
+    </p>
+    <ul>
+      <li>
+        <strong>依存関係の再取得:</strong>
+        <pre>
+./gradlew build --refresh-dependencies
+        </pre>
+        キャッシュを無視して、最新の依存関係を再取得します。
+      </li>
+      <li>
+        <strong>クリーンビルド:</strong>
+        <pre>
+./gradlew clean
+        </pre>
+        古いビルド成果物を削除し、新しい状態から開始します。
+      </li>
+    </ul>
+
+    <h2>⚙️ キャッシュを自動的に更新する設定</h2>
+    <p>
+      プロジェクトのルートディレクトリにある<code>settings.gradle</code>ファイルを編集して、キャッシュの問題を防ぎます。
+    </p>
+    <pre>
+configurations.all {
+  resolutionStrategy {
+      cacheDynamicVersionsFor 0, 'seconds'
+      cacheChangingModulesFor 0, 'seconds'
+  }
+}
+    </pre>
+    <p>これにより、毎回最新の依存関係を取得することが保証されます。</p>
+
+    <h2>📋 Gradle Language Supportの活用</h2>
+    <p>
+      Gradle Language
+      Support拡張機能を利用することで、VSCode上でGradleタスクを簡単に管理できます。
+    </p>
+    <ol>
+      <li>
+        サイドバーのGradleアイコンをクリックし、「Tasks」セクションで実行可能なタスクを確認。
+      </li>
+      <li>ターミナルで保存時に実行されるタスクやログを確認。</li>
+    </ol>
+
+    <h2>✨ Run On Saveの併用</h2>
+    <p>
+      VSCode拡張機能「Run On
+      Save」を活用することで、保存時に自動でビルドを実行できます。
+    </p>
+    <ol>
+      <li>
+        **拡張機能のインストール:** サイドバーの「Extensions」タブで「Run On
+        Save」を検索してインストールします。
+      </li>
+      <li>
+        **設定方法:**
+        <pre>
+"emeraldwalk.runonsave": {
+  "commands": [
+      {
+          "match": ".*\\.java$",
+          "cmd": "./gradlew clean build --refresh-dependencies"
+      }
+  ]
+}
+        </pre>
+        Javaファイルを保存するたびに、キャッシュをリセットしてビルドを実行できます。
+      </li>
+    </ol>
+
+    <h2>🚀 ビルド時間を短縮する工夫</h2>
+    <ul>
+      <li>
+        <strong>Gradleデーモンの有効化:</strong>
+        ビルドプロセスを持続させて起動時間を短縮します。
+      </li>
+      <li>
+        <strong>並列ビルド:</strong>
+        <pre>
+./gradlew build --parallel
+        </pre>
+        複数タスクを並行して実行し、効率的にビルドできます。
+      </li>
+    </ul>
+    <script src="../../js/common.js"></script>
+  </body>
+</html>
