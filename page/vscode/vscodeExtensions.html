@@ -200,6 +200,431 @@ title: VSCodeについて
           Visual Studio Marketplaceで詳細を見る
         </a>
       </li>
+
+      <li>
+        🛠️ <strong>Extension Pack for Java:</strong>
+        <p>
+          Java開発環境を効率化するための拡張機能パックです。以下が主な特徴です：
+        </p>
+        <ul>
+          <li>
+            📜 <strong>Language Support for Java by Red Hat:</strong>
+            コード補完やリファクタリングを提供。
+          </li>
+          <li>
+            🐞 <strong>Debugger for Java:</strong>
+            Javaアプリケーションのデバッグを簡単に。
+          </li>
+          <li>
+            🧪 <strong>Java Test Runner:</strong>
+            JUnitやTestNGによるテスト実行とデバッグをサポート。
+          </li>
+          <li>
+            ⚙️ <strong>Maven for Java:</strong>
+            Mavenプロジェクトの管理を効率化。
+          </li>
+          <li>
+            🔗 <strong>Gradle for Java:</strong>
+            Gradleタスクの管理と実行を簡易化。
+          </li>
+          <li>
+            🗂️ <strong>Project Manager for Java:</strong>
+            プロジェクト整理やクラス管理を便利に。
+          </li>
+          <li>
+            ✨ <strong>Visual Studio IntelliCode:</strong>
+            AIによるコード補完を提供し、生産性向上を支援。
+          </li>
+        </ul>
+        <h3>⚙️ <strong>初期設定が必要な場合</strong></h3>
+        <p>
+          Extension Pack for
+          Javaを正しく動作させるには、以下の手順を行う必要があります：
+        </p>
+        <ol>
+          <li>
+            <strong>JDK（Java Development Kit）のインストール:</strong>
+            必要なJDKをインストールし、`java -version`または`javac
+            -version`で確認してください。
+          </li>
+          <li>
+            <strong>Java Homeの設定:</strong>
+            環境変数`JAVA_HOME`にJDKのルートディレクトリを設定します。
+            <ul>
+              <li>例: Windowsの場合、`C:\Program Files\Java\jdk-XX.X.X`</li>
+              <li>**Path変数に追加:** `%JAVA_HOME%\bin`</li>
+              <li>
+                Mac/Linuxでは以下を設定:
+                <pre>
+      export JAVA_HOME=/path/to/your/jdk
+      export PATH=$JAVA_HOME/bin:$PATH
+                </pre>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>プロジェクトの初期セットアップ:</strong>
+            VSCodeのコマンドパレットで「Java: Create Java
+            Project」を選択し、プロジェクトを作成します。
+          </li>
+        </ol>
+        <p>
+          さらに詳細な設定やセットアップ手順は以下のリンクを参照してください:
+        </p>
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack"
+          target="_blank"
+        >
+          Visual Studio Marketplaceで詳細を見る
+        </a>
+      </li>
+
+      <li>
+        🛠️ <strong>Lombok Annotation Support:</strong>
+        <p>
+          Javaの開発で便利なLombokライブラリをVSCodeでも簡単に扱えるようにする拡張機能です。以下が主な特徴です：
+        </p>
+        <ul>
+          <li>
+            📜
+            <strong>コード補完とリファクタリング:</strong>
+            Lombokのアノテーション（例: <code>@Getter</code>,
+            <code>@Setter</code>）を利用したコード補完をサポート。
+          </li>
+          <li>
+            🔄 <strong>Delombok機能:</strong>
+            Lombokのアノテーションを通常のJavaコードに変換。標準的なgetter/setterやコンストラクタを自動生成したコードとして出力可能。
+          </li>
+          <li>
+            🛠️ <strong>対応する注釈:</strong>
+            主な対応するLombokアノテーションは以下の通り：
+            <ul>
+              <li><code>@Getter</code> / <code>@Setter</code></li>
+              <li><code>@ToString</code></li>
+              <li><code>@EqualsAndHashCode</code></li>
+              <li>
+                <code>@AllArgsConstructor</code> /
+                <code>@NoArgsConstructor</code>
+              </li>
+              <li><code>@Data</code></li>
+            </ul>
+          </li>
+        </ul>
+
+        <h3>⚙️ <strong>初期設定が必要な場合</strong></h3>
+        <p>以下の手順でプロジェクトにLombokを導入します：</p>
+        <ol>
+          <li>
+            <strong>依存関係を追加:</strong>
+            <p>
+              Gradleプロジェクトの場合、<code>build.gradle</code>に以下を追加します：
+            </p>
+            <pre>
+      dependencies {
+          compileOnly 'org.projectlombok:lombok:1.18.38'
+          annotationProcessor 'org.projectlombok:lombok:1.18.38'
+      }
+            </pre>
+            Mavenの場合は、<code>pom.xml</code>に以下の依存関係を記載します：
+            <pre>
+      <dependency>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok</artifactId>
+          <version>1.18.38</version>
+          <scope>provided</scope>
+      </dependency>
+            </pre>
+          </li>
+          <li>
+            <strong>Java Homeの設定:</strong>
+            環境変数<code>JAVA_HOME</code>にJDKのルートディレクトリを指定します。
+            <ul>
+              <li>
+                例: Windowsの場合は<code>C:\Program Files\Java\jdk-XX.X.X</code>
+              </li>
+              <li>**Path変数に追加:** <code>%JAVA_HOME%\bin</code></li>
+              <li>
+                Mac/Linuxでは以下を設定:
+                <pre>
+      export JAVA_HOME=/path/to/your/jdk
+      export PATH=$JAVA_HOME/bin:$PATH
+                </pre>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <strong>Delombokを利用:</strong>
+            コマンドラインで以下を実行することで、Lombokアノテーションを削除し、通常のJavaコードを生成します：
+            <pre>
+      java -jar lombok.jar delombok src -d src-delomboked
+            </pre>
+          </li>
+        </ol>
+
+        <h3>📝 <strong>LombokとDelombokのサンプルコード</strong></h3>
+        <p>
+          以下は、Lombokを使用した場合とDelombokを適用した場合のコードとコンパイル結果です：
+        </p>
+
+        <h4>🔧 <strong>Lombokを使用した場合</strong></h4>
+        <p>ソースコード:</p>
+        <pre>
+      import lombok.Getter;
+      import lombok.Setter;
+      
+      public class MyClass {
+          @Getter @Setter
+          private String name;
+      
+          @Getter @Setter
+          private int age;
+      }
+        </pre>
+        <p>コンパイル後の結果:</p>
+        <pre>
+      public class MyClass {
+          private String name;
+          private int age;
+      
+          public String getName() {
+              return this.name;
+          }
+      
+          public void setName(String name) {
+              this.name = name;
+          }
+      
+          public int getAge() {
+              return this.age;
+          }
+      
+          public void setAge(int age) {
+              this.age = age;
+          }
+      }
+        </pre>
+
+        <h4>🔧 <strong>Delombokを使用した場合</strong></h4>
+        <p>ソースコード（Delombokで変換後）:</p>
+        <pre>
+      public class MyClass {
+          private String name;
+          private int age;
+      
+          public String getName() {
+              return this.name;
+          }
+      
+          public void setName(String name) {
+              this.name = name;
+          }
+      
+          public int getAge() {
+              return this.age;
+          }
+      
+          public void setAge(int age) {
+              this.age = age;
+          }
+      }
+        </pre>
+        <p>コンパイル後の結果:</p>
+        <pre>
+      public class MyClass {
+          private String name;
+          private int age;
+      
+          public String getName() {
+              return this.name;
+          }
+      
+          public void setName(String name) {
+              this.name = name;
+          }
+      
+          public int getAge() {
+              return this.age;
+          }
+      
+          public void setAge(int age) {
+              this.age = age;
+          }
+      }
+        </pre>
+
+        <h3>🔄 <strong>LombokとDelombokの違い</strong></h3>
+        <p>
+          Lombokは開発中の効率性重視の選択肢であり、コード記述を簡潔に保てます。一方、Delombokは特定の場面（例えば、Javadoc生成や互換性確保）で必要に応じて使用されるものです。
+        </p>
+        <h4>主なDelombokコマンド:</h4>
+        <ul>
+          <li>
+            ディレクトリ全体をDelombok:
+            <pre>
+      java -jar lombok.jar delombok src -d delombok-src
+            </pre>
+          </li>
+          <li>
+            単一ファイルをDelombok:
+            <pre>
+      java -jar lombok.jar delombok -p MyClass.java
+            </pre>
+          </li>
+          <li>
+            フォーマットを整えた出力:
+            <pre>
+      java -jar lombok.jar delombok -f pretty src -d delombok-src
+            </pre>
+          </li>
+        </ul>
+
+        <p>さらに詳細な情報は以下のリンクで確認できます：</p>
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-lombok"
+          target="_blank"
+        >
+          Visual Studio Marketplaceで詳細を見る
+        </a>
+      </li>
+
+      <li>
+        🛠️ <strong>Spring Boot Extension Pack:</strong>
+        <p>
+          Spring
+          Bootアプリケーションを効率的に開発するためのVSCode用拡張機能パックです。以下が主な特徴です：
+        </p>
+        <ul>
+          <li>
+            🚀 <strong>Spring Initializr:</strong>
+            プロジェクトのひな型を簡単に生成でき、言語や依存ライブラリを選択してカスタマイズ可能。
+          </li>
+          <li>
+            🛠️ <strong>Spring Boot Tools:</strong>
+            アプリケーションの実行、停止、デバッグをサポート。Spring固有のナビゲーションや補完機能を提供。
+          </li>
+          <li>
+            📊 <strong>Spring Boot Dashboard:</strong>
+            サイドバーにSpring専用のダッシュボードを表示し、プロジェクト管理を効率化。
+          </li>
+        </ul>
+
+        <h3>⚙️ <strong>初期設定が必要な場合</strong></h3>
+        <p>
+          Spring Boot Extension Packを最大限活用するために以下の準備が必要です：
+        </p>
+        <ol>
+          <li>
+            <strong>Java Development Kit (JDK) のインストール:</strong>
+            JDKをインストールし、ターミナルで<code>java -version</code
+            >を実行して確認します。バージョン17以上がおすすめ。
+          </li>
+          <li>
+            <strong>Spring Initializrでのプロジェクト作成:</strong>
+            <ol>
+              <li>コマンドパレットで「Spring Initializr」を検索。</li>
+              <li>
+                言語、バージョン、Group ID、Artifact
+                IDなどをウィザードで設定してプロジェクトを生成。
+              </li>
+            </ol>
+          </li>
+          <li>
+            <strong>プロパティファイルの設定:</strong>
+            <p>
+              プロジェクト内の<code>application.properties</code>や<code>application.yml</code>を編集してアプリケーションの挙動をカスタマイズ。
+            </p>
+            <ul>
+              <li>サーバーポートの変更: <code>server.port=8081</code></li>
+              <li>
+                データベース接続設定:
+                <code
+                  >spring.datasource.url=jdbc:mysql://localhost:3306/mydb</code
+                >
+              </li>
+              <li>ログ設定: <code>logging.level.root=WARN</code></li>
+              <li>
+                メールサーバー設定:
+                <code>spring.mail.host=smtp.example.com</code>
+              </li>
+            </ul>
+          </li>
+        </ol>
+
+        <h3>🔧 <strong>補足</strong></h3>
+        <p>
+          Spring Boot Extension
+          Packは、インストールするだけで基本的な機能が使えますが、プロジェクトを設定してSpring
+          InitializrやDashboardを活用することでさらに効率的な開発が可能になります。
+        </p>
+        <p>詳細な情報やセットアップ手順は以下のリンクで確認できます：</p>
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=vmware.vscode-boot-dev-pack"
+          target="_blank"
+        >
+          Visual Studio Marketplaceで詳細を見る
+        </a>
+      </li>
+      <li>
+        🛠️ <strong>GitLens:</strong>
+        <p>
+          VSCodeでGit操作を効率化するための拡張機能です。GitLensを使用することで、リポジトリの履歴やブランチ操作を直感的に行えるようになります。
+        </p>
+        <ul>
+          <li>
+            🔍 <strong>コード変更履歴の確認:</strong>
+            <p>
+              「Git Blame」機能を使い、コードの誰がどの部分を変更したかを表示。
+            </p>
+          </li>
+          <li>
+            📜 <strong>コミットの管理:</strong>
+            <p>
+              過去のコミットメッセージや変更箇所を簡単に確認。特定のコミット間の比較も可能。
+            </p>
+          </li>
+          <li>
+            🔄 <strong>ブランチ間の比較:</strong>
+            <p>
+              ブランチ間のコード変更を視覚的に確認して、マージ前のチェックが可能。<br />
+              サイドバーの「BRANCHES」セクションでブランチを右クリックし、<code
+                >Select for Compare</code
+              >を選択して比較できます。
+            </p>
+          </li>
+          <li>
+            🌐 <strong>リモート管理:</strong>
+            <p>
+              リモートリポジトリとのフェッチやプッシュを簡単に実行。「↑」アイコンをクリックして変更を反映可能。
+            </p>
+          </li>
+          <li>
+            🌱 <strong>ブランチの作成:</strong>
+            <p>
+              新しいブランチを作成するには、サイドバーの「BRANCHES」ビューで右クリックして、<code
+                >Create Branch</code
+              >を選択。新しいブランチでの開発やテストがスムーズに行えます。
+            </p>
+          </li>
+          <li>
+            ✨ <strong>課題関連付け:</strong>
+            <p>
+              GitHubやGitLabの課題をブランチに関連付けて管理可能。ただし、Redmineなどのツールとは直接的な連携はありません。
+            </p>
+          </li>
+        </ul>
+
+        <h3>🔧 <strong>使い方の補足</strong></h3>
+        <p>
+          GitLensを使うと、変更履歴やブランチ操作が視覚化され、開発効率が大幅に向上します。コミットやプッシュ、ブランチ比較をシームレスに実行できるため、複雑なリポジトリ管理も簡単です。
+        </p>
+        <p>詳細な情報やダウンロードは以下のリンクから確認できます：</p>
+        <a
+          href="https://marketplace.visualstudio.com/items?itemName=eamodio.gitlens"
+          target="_blank"
+        >
+          Visual Studio Marketplaceで詳細を見る
+        </a>
+      </li>
     </ul>
     <script src="../../js/common.js"></script>
   </body>
