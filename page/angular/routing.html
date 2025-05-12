@@ -1,0 +1,144 @@
+---
+layout: null
+title: Angularのroutingについて
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Angularのroutingについて</title>
+    <link rel="stylesheet" href="../../assets/css/angular.css" />
+    <link rel="stylesheet" href="../../assets/css/common.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Angularのroutingについて</h1>
+    </header>
+
+    <main>
+      <section>
+        <h2>手順</h2>
+        <p>
+          既存のプロジェクトではtop(メニュー一覧が表示される画面)が一番最初に表示されることになっていたが、
+          新規作成したlogin(ログイン画面)を最初に表示させて、ログインが成功したらtopに遷移するように変更する方法。
+        </p>
+        <ol>
+          <li>
+            <strong>ログインコンポーネントの作成:</strong>
+            Angular CLIを使って新しいログインコンポーネントを生成します。
+            <pre class="code-block">
+ng generate component Login
+            </pre>
+          </li>
+          <li>
+            <strong>ルーティング設定:</strong>
+            <p>
+              app-routing.module.tsで、ルートをデフォルトのログイン画面に設定します。
+            </p>
+            <pre class="code-block">
+const routes: Routes = [
+  { path: '', component: LoginComponent },
+  { path: 'menu', component: TopComponent }
+];
+            </pre>
+          </li>
+          <li>
+            <strong>ログイン成功後の遷移:</strong>
+            ログイン後にメニュー画面に遷移するためのロジックを実装します。
+            <pre class="code-block">
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
+})
+export class LoginComponent {
+  constructor(private router: Router) {}
+
+  onLoginSuccess() {
+    this.router.navigate(['/menu']);
+  }
+}
+            </pre>
+          </li>
+          <li>
+            <strong>実験的なアプローチ:</strong>
+            <p>
+              ルーティングを使わない場合は、`index.html`
+              に直接以下を記載します。
+            </p>
+            <pre class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Angular ログイン画面&lt;/title&gt;
+  &lt;link rel="stylesheet" href="../../assets/css/noCode.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;ログイン画面&lt;/h1&gt;
+  &lt;p&gt;このページではAngularのログインコンポーネントを最初に表示させる方法を紹介しています。&lt;/p&gt;
+  &lt;!-- ログインコンポーネントを表示 --&gt;
+  &lt;app-login&gt;&lt;/app-login&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </pre>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>親子ルートの仕組み</h2>
+        <p>
+          Angularでは、親コンポーネントが共通のレイアウト（例えばナビゲーションバーやヘッダー）を持ち、子コンポーネントで個別の内容を表示できます。
+        </p>
+        <p>
+          以下の例は、親コンポーネントとして`LayoutComponent`を定義し、その中で`InicioComponent`を表示する子ルートを設定しています。
+        </p>
+        <pre class="code-block">
+const routes: Routes = [
+  {
+    path: '',
+    component: LayoutComponent,
+    children: [
+      { path: 'inicio', component: InicioComponent },
+      { path: '', redirectTo: '/inicio', pathMatch: 'full' }
+    ]
+  },
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: Error404Component }
+];
+        </pre>
+        <p>
+          親ルートで`LayoutComponent`が表示され、その中の`<router-outlet>`に子ルート（`InicioComponent`など）が表示されます。
+          これにより、親コンポーネントのレイアウトを複数の子で共有しながら、個別の画面を切り替えることができます。
+        </p>
+      </section>
+
+      <section>
+        <h2>参考ソース</h2>
+        <ul>
+          <li>
+            <a
+              href="https://github.com/cijujoseph/alfresco-devcon-2018-cijuj/blob/35c97faf513baa9f2443bcdb01aed6d4339ee209/voice-enabled-adf-app/src/app/login/login.component.ts"
+              target="_blank"
+              >github_1</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/jona04/projeto-optimum-front/blob/28ce048e28bbb4b860abbb0020fc956b99472f21/src/app/login/login.component.ts"
+              target="_blank"
+              >github_2</a
+            >
+          </li>
+        </ul>
+      </section>
+    </main>
+    <script src="../../js/common.js"></script>
+  </body>
+</html>
