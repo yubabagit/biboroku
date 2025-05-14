@@ -1,0 +1,155 @@
+---
+layout: null
+title: "効率的なBuildについて"
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ブラウザ更新問題の解決策まとめ</title>
+    <link rel="stylesheet" href="../../assets/css/noCode.css" />
+  </head>
+  <body>
+    <h1>ブラウザ更新問題の解決策まとめ</h1>
+    <p>
+      以下は、AngularとJava（Spring
+      Boot、Gradle）を用いた開発で遭遇するブラウザ更新に関する問題とその解決策をまとめています。
+    </p>
+
+    <h2>Angularの設定方法</h2>
+    <div class="card">
+      <h3>1. Live Reloadを有効にする</h3>
+      <p>
+        Angularでのリアルタイム更新が無効になっている場合、以下を試してください：
+      </p>
+      <div class="code-block">
+        <pre><code>ng serve --live-reload=true</code></pre>
+      </div>
+
+      <h3>2. 静的リソースのバージョン管理</h3>
+      <p>
+        バージョン管理された静的リソースを利用すると、ブラウザキャッシュの問題を解決しやすくなります。たとえば：
+      </p>
+      <div class="code-block">
+        <pre><code>"outputHashing": "all"</code></pre>
+      </div>
+      <p>
+        上記を<code>angular.json</code>に設定することで、リソース名に一意のハッシュを追加することができます。
+      </p>
+    </div>
+
+    <h2>Java (Spring Boot & Gradle) の設定方法</h2>
+    <div class="card">
+      <h3>1. Gradleの自動ビルド設定</h3>
+      <p>
+        Spring Bootで自動ビルドを実現するには、以下の設定を使用してください：
+      </p>
+      <div class="code-block">
+        <pre>
+            <code>
+dependencies {
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+}
+            </code>
+        </pre>
+      </div>
+      <ul>
+        <li>
+          **`application.properties` を使用する場合**:
+          <div class="code-block">
+            <pre><code>spring.devtools.restart.enabled=true</code></pre>
+          </div>
+        </li>
+        <li>
+          **`application.yml` を使用する場合**:
+          <div class="code-block">
+            <pre><code>
+spring:
+    devtools:
+        restart:
+        enabled: true
+                </code></pre>
+          </div>
+        </li>
+      </ul>
+
+      <h3>2. Gradle Continuous Buildオプション</h3>
+      <p>
+        Gradleの連続ビルドを使用して効率を上げるには、以下のコマンドを利用してください：
+      </p>
+      <div class="code-block">
+        <pre><code>./gradlew build --continuous</code></pre>
+      </div>
+
+      <h3>3. 静的リソースのキャッシュ制御</h3>
+      <p>
+        キャッシュ制御を一元的に設定するには、以下を`WebConfig.java`に記載します：
+      </p>
+      <div class="code-block">
+        <pre><code>
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("classpath:/static/")
+                .setCacheControl(CacheControl.maxAge(1, TimeUnit.HOURS));
+    }
+}
+</code></pre>
+      </div>
+
+      <h3>4. Cache-Control ヘッダーの利用</h3>
+      <p>
+        コントローラーで特定のリソースに対してキャッシュポリシーを設定する方法もあります：
+      </p>
+      <div class="code-block">
+        <pre><code>
+import org.springframework.http.CacheControl;
+import java.util.concurrent.TimeUnit;
+
+@GetMapping("/static/main.js")
+public ResponseEntity&lt;Resource&gt; getJavaScript() {
+    Resource resource = new ClassPathResource("static/main.js");
+    return ResponseEntity.ok()
+        .cacheControl(CacheControl.maxAge(1, TimeUnit.HOURS))
+        .body(resource);
+}
+        </code></pre>
+      </div>
+
+      <h3>5. おすすめの設定の組み合わせ</h3>
+      <p>
+        ブラウザ更新問題を効率的に解決するため、以下の設定を組み合わせることをおすすめします：
+      </p>
+      <ul>
+        <li>
+          <strong>静的リソースのキャッシュ管理:</strong>
+          `WebConfig.java`を使って一元的に設定。
+        </li>
+        <li>
+          <strong>動的リソースのリロード:</strong>
+          `spring-boot-devtools`を利用してコード更新時にアプリケーションを自動リロード。
+        </li>
+        <li>
+          <strong>ビルドの効率化:</strong>
+          Gradleの`--continuous`オプションを活用してコード変更を即座に反映。
+        </li>
+        <li>
+          <strong>バージョン管理:</strong>
+          静的リソースにバージョン番号やハッシュを付与してブラウザキャッシュを適切に更新。
+        </li>
+      </ul>
+    </div>
+
+    <p>
+      上記の設定を組み合わせることで、ブラウザのキャッシュ問題やリソース更新の課題を効率よく解決できます。
+    </p>
+  </body>
+</html>
