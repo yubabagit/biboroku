@@ -1,0 +1,154 @@
+---
+layout: null
+title: SQLログ設定手順
+---
+
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SQLログ設定手順</title>
+    <link rel="stylesheet" href="../../assets/css/noCode.css" />
+    <link rel="stylesheet" href="../../assets/css/common.css" />
+  </head>
+  <body>
+    <header>
+      <h1>SQLログ設定手順</h1>
+      <p>Spring BootでSQLログを出力する方法</p>
+    </header>
+    <main>
+      <section>
+        <h2>手順 1: Gradleに依存関係を追加</h2>
+        <p>
+          以下の設定をプロジェクトの<code>build.gradle</code>ファイルに記述してください:
+        </p>
+        <pre>
+<code>implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'</code>
+        </pre>
+        <p>依存関係を更新します (例: <code>gradle build</code> を実行)。</p>
+      </section>
+
+      <section>
+        <h2>手順 2A: JDBCでのログ設定</h2>
+        <p>
+          以下の設定をプロジェクトの<code>src/main/resources/application.properties</code>ファイルに記述してください:
+        </p>
+        <pre>
+<code>logging.level.jdbc.sqlonly=DEBUG
+logging.level.jdbc.resultsettable=TRACE
+spring.datasource.url=jdbc:log4jdbc:mysql://aurora-endpoint:3306/your_database_name?useUnicode=true&characterEncoding=UTF-8
+spring.datasource.username=your_username
+spring.datasource.password=your_password</code>
+        </pre>
+        <p>各設定の詳細:</p>
+        <ul>
+          <li>
+            <strong>logging.level.jdbc.sqlonly=DEBUG</strong>:
+            SQLクエリをプレースホルダ付きでログに記録。
+          </li>
+          <li>
+            <strong>logging.level.jdbc.resultsettable=TRACE</strong>:
+            クエリ結果を記録。
+          </li>
+          <li>
+            <strong>spring.datasource.url</strong>:
+            Auroraエンドポイントを指定し、UTF-8を使用してデータベースと通信。
+          </li>
+        </ul>
+        <section>
+          <h3>適用前のSQLログ例</h3>
+          <pre>
+<code>Executing prepared SQL statement: SELECT * FROM users WHERE id = ?</code>
+          </pre>
+        </section>
+        <section>
+          <h3>適用後のSQLログ例</h3>
+          <pre>
+<code>Executing prepared SQL statement: SELECT * FROM users WHERE id = 123</code>
+          </pre>
+        </section>
+      </section>
+
+      <section>
+        <h2>手順 2B: Hibernateでのログ設定</h2>
+        <p>
+          以下の設定をプロジェクトの<code>src/main/resources/application.properties</code>ファイルに記述してください:
+        </p>
+        <pre>
+<code>spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.properties.hibernate.type=trace</code>
+        </pre>
+        <p>各設定の詳細:</p>
+        <ul>
+          <li>
+            <strong>spring.jpa.show-sql=true</strong>:
+            Hibernateを使用する場合、SQL文をログに出力。
+          </li>
+          <li>
+            <strong>spring.jpa.properties.hibernate.format_sql=true</strong>:
+            SQLを整形してログを出力。
+          </li>
+          <li>
+            <strong>spring.jpa.properties.hibernate.type=trace</strong>:
+            バインド値を含む詳細なSQLログを記録。
+          </li>
+        </ul>
+        <section>
+          <h3>適用前のSQLログ例</h3>
+          <pre>
+<code>select * from users where id = ?</code>
+          </pre>
+        </section>
+        <section>
+          <h3>適用後のSQLログ例</h3>
+          <pre>
+<code>select * from users where id = 123</code>
+          </pre>
+        </section>
+      </section>
+
+      <section>
+        <h2>文字化けを防ぐ方法</h2>
+        <p>文字化けを防ぐためには、以下のいずれかの方法を実施してください:</p>
+        <h3>方法 1: application.propertiesに設定</h3>
+        <p>
+          以下の設定を<code>src/main/resources/application.properties</code>に追加します:
+        </p>
+        <pre>
+<code>logging.file.encoding=UTF-8
+logging.charset=UTF-8</code>
+        </pre>
+        <h3>方法 2: JVMオプションを利用（java起動時に毎回実施）</h3>
+        <p>以下のオプションをJVM起動時に指定します:</p>
+        <pre>
+<code>-Dfile.encoding=UTF-8</code>
+        </pre>
+        <p>
+          どちらか一方を設定するだけで十分です。環境に合わせて適切な方法を選んでください。
+        </p>
+      </section>
+
+      <section>
+        <h2>log4jdbc-log4j2とは？</h2>
+        <p>
+          <strong>log4jdbc-log4j2</strong
+          >は、以下の特徴を持つJDBCラッパーライブラリです:
+        </p>
+        <ul>
+          <li>バインド値を含むSQLクエリログを出力。</li>
+          <li>クエリ結果や接続状況を記録。</li>
+          <li>軽量でデバッグ用途に適しています。</li>
+        </ul>
+      </section>
+
+      <footer>
+        <p>
+          開発環境でのデバッグ用として活用し、本番環境での使用は慎重に行ってください。
+        </p>
+      </footer>
+    </main>
+    <script src="../../js/common.js"></script>
+  </body>
+</html>
